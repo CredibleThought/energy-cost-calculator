@@ -22,7 +22,7 @@ if 'rate_low' not in st.session_state:
 with st.sidebar:
     components.html(
         """
-        <div style="transform: scale(0.8); transform-origin: top left;">
+        <div style="transform: scale(0.9); transform-origin: top left;">
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="stevefernandes" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
         </div>
         """,
