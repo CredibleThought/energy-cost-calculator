@@ -177,7 +177,7 @@ with st.form("new_device"):
 
 # Display and Edit Devices
 if st.session_state.devices:
-    st.subheader("Device List & Costs")
+    st.subheader("Device List")
     
     df = pd.DataFrame(st.session_state.devices)
     
@@ -270,18 +270,29 @@ if st.session_state.devices:
         display_df.reset_index(drop=True, inplace=True)
         display_df.index = display_df.index + 1
         
+        # Rename columns for display
+        display_df = display_df.rename(columns={
+            "Power Heavy": "Heavy Load\n(W)",
+            "Power Light": "Regular Load\n(W)",
+            "Alloc Heavy": "Heavy %",
+            "Alloc Light": "Regular %",
+            "Hours Peak": "Peak Hours",
+            "Hours Low": "Off-Peak Hours"
+        })
+        
 
 
         format_mapping = {
             "Daily Cost": "£{:.2f}", 
             "Monthly Cost": "£{:.2f}", 
             "Annual Cost": "£{:.2f}",
-            "Power Heavy": "{:.2f}",
-            "Power Light": "{:.2f}",
-            "Hours Peak": "{:.2f}",
-            "Hours Low": "{:.2f}",
-            "Alloc Heavy": "{:.2f}",
-            "Alloc Light": "{:.2f}"
+            "Heavy Load\n(W)": "{:.2f}",
+            "Regular Load\n(W)": "{:.2f}",
+            "Peak Hours": "{:.2f}",
+
+            "Off-Peak Hours": "{:.2f}",
+            "Heavy %": "{:.2f}",
+            "Regular %": "{:.2f}"
         }
         
         st.subheader("Cost Breakdown")
