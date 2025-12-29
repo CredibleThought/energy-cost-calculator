@@ -149,11 +149,11 @@ with st.form("new_device"):
     alloc_heavy = c3.number_input("Heavy Load %", min_value=0.0, max_value=100.0, value=100.0, step=1.0)
     alloc_light = c4.number_input("Regular Load %", min_value=0.0, max_value=100.0, value=100.0 - alloc_heavy, step=1.0)
     
-    st.subheader("Time Profile (Per Day at each Rate)")
+    st.subheader("Hours Per Day")
     t1, t2 = st.columns(2)
     # Total hours can be up to 24.
-    hours_peak = t1.number_input("Hours @ Peak Rate", min_value=0.0, max_value=24.0, value=0.0, step=0.1, format="%.2f")
-    hours_low = t2.number_input("Hours @ Off-Peak Rate", min_value=0.0, max_value=24.0, value=0.0, step=0.1, format="%.2f")
+    hours_peak = t1.number_input("Peak", min_value=0.0, max_value=24.0, value=0.0, step=0.1, format="%.2f")
+    hours_low = t2.number_input("Off-Peak", min_value=0.0, max_value=24.0, value=0.0, step=0.1, format="%.2f")
 
     submitted = st.form_submit_button("Add Device")
     if submitted:
