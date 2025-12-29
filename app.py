@@ -263,6 +263,10 @@ if st.session_state.devices:
                 results.append({"Daily Cost": Decimal(0), "Monthly Cost": Decimal(0), "Annual Cost": Decimal(0), "Daily kWh": Decimal(0)})
 
         cost_df = pd.DataFrame(results)
+        # Fix index alignment: Ensure cost_df matches edited_df indices
+        # If edited_df has gaps (e.g. from deletion), default RangeIndex of cost_df causes concat errors.
+        if not cost_df.empty:
+            cost_df.index = edited_df.index
         
         display_df = pd.concat([edited_df, cost_df], axis=1)
         
