@@ -156,8 +156,8 @@ with st.form("new_device"):
     st.subheader("Hours Per Day")
     t1, t2 = st.columns(2)
     # Total hours can be up to 24.
-    hours_peak = t1.number_input("Peak", min_value=0.0, max_value=24.0, value=0.0, step=0.1, format="%.2f")
-    hours_low = t2.number_input("Off-Peak", min_value=0.0, max_value=24.0, value=0.0, step=0.1, format="%.2f")
+    hours_peak = t1.number_input("Peak", min_value=0.0, max_value=24.0, value=0.0, step=0.01, format="%.2f")
+    hours_low = t2.number_input("Off-Peak", min_value=0.0, max_value=24.0, value=0.0, step=0.01, format="%.2f")
 
     submitted = st.form_submit_button("Add Device")
     if submitted:
@@ -195,8 +195,8 @@ if st.session_state.devices:
             "Power Light": st.column_config.NumberColumn("Regular Load (W)", min_value=0.0, format="%.2f"),
             "Alloc Heavy": st.column_config.NumberColumn("Heavy Load %", min_value=0.0, max_value=100.0, format="%.2f"),
             "Alloc Light": st.column_config.NumberColumn("Regular Load %", min_value=0.0, max_value=100.0, format="%.2f"),
-            "Hours Peak": st.column_config.NumberColumn("Hours @ Peak Rate", min_value=0.0, max_value=24.0, step=0.1, format="%.2f"),
-            "Hours Low": st.column_config.NumberColumn("Hours @ Off-Peak Rate", min_value=0.0, max_value=24.0, step=0.1, format="%.2f"),
+            "Hours Peak": st.column_config.NumberColumn("Peak Hours", min_value=0.0, max_value=24.0, step=0.01, format="%.2f"),
+            "Hours Low": st.column_config.NumberColumn("Off-Peak Hours", min_value=0.0, max_value=24.0, step=0.01, format="%.2f"),
         },
         key="device_editor"
     )
