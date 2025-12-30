@@ -362,25 +362,12 @@ if st.session_state.devices:
         st.subheader("Annual Cost Distribution")
         
         # Prepare data for Pie Chart
-        # We need Device Name and Annual Cost
-        pie_data = []
-        for index, row in edited_df.iterrows():
-            device_name = row.get('Name', f"Device {index+1}")
-            try:
-                # Retrieve the Annual Cost calculated earlier
-                annual_cost = results[index]['Annual Cost']
-            except IndexError:
-                annual_cost = Decimal(0)
-            
-            pie_data.append({
-                "Device": device_name,
-                "Annual Cost (£)": float(annual_cost)
-            })
-            
-        chart_df = pd.DataFrame(pie_data)
+        # Use display_df which contains all the correct aligned data
+        chart_df = display_df[["Name", "Annual Cost"]].copy()
+        chart_df["Annual Cost"] = chart_df["Annual Cost"].astype(float)
         
         if not chart_df.empty:
-            fig = px.pie(chart_df, values="Annual Cost (£)", names="Device", 
+            fig = px.pie(chart_df, values="Annual Cost", names="Name", 
                          title="Share of Total Annual Cost")
             st.plotly_chart(fig, use_container_width=True)
 
