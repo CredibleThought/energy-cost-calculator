@@ -137,6 +137,16 @@ st.markdown("""
              color: white !important;
         }
     }
+    
+    /* Plotly Legend Scrollbar Fix */
+    g.scrollbar rect.scrollbar-glyph {
+        fill: #888 !important;
+        fill-opacity: 0.8 !important;
+    }
+    g.scrollbar rect.scrollbar-channel {
+        fill: #eee !important;
+        fill-opacity: 0.1 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
