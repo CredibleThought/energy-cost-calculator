@@ -13,7 +13,7 @@ st.title("Energy Usage Calculator")
 if 'devices' not in st.session_state:
     st.session_state.devices = []
 if 'rate_peak' not in st.session_state:
-    st.session_state.rate_peak = 0.292
+    st.session_state.rate_peak = 0.2361
 if 'rate_low' not in st.session_state:
     st.session_state.rate_low = 0.07
 
