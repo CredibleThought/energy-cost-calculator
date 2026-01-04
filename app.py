@@ -150,6 +150,33 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Custom CSS for the button - Injected specifically to override Streamlit defaults
+st.markdown("""
+<style>
+    /* Target the submit button within the form */
+    [data-testid="stForm"] [data-testid="stFormSubmitButton"] button {
+        background-color: #007bff !important;
+        color: white !important;
+        border: none !important;
+    }
+    
+    [data-testid="stForm"] [data-testid="stFormSubmitButton"] button:hover {
+        background-color: #0056b3 !important;
+        color: white !important;
+    }
+
+    [data-testid="stForm"] [data-testid="stFormSubmitButton"] button:active {
+           background-color: #004494 !important;
+           color: white !important;
+    }
+    
+    /* Ensure text color is white in both light and dark modes for this button */
+    [data-testid="stForm"] [data-testid="stFormSubmitButton"] button p {
+        color: white !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 with st.form("new_device"):
     name = st.text_input("Device Name")
     
