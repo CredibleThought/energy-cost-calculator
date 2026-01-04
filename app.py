@@ -212,15 +212,19 @@ with st.form("new_device"):
                 "Alloc Heavy": alloc_heavy,
                 "Alloc Light": alloc_light,
                 "Hours Peak": hours_peak,
-                "Hours Low": hours_low
+                "Hours Low": hours_low,
+                "Include": True
             })
             st.success(f"Added {name}")
 
 # Display and Edit Devices
 if st.session_state.devices:
-    st.subheader("Device List")
-    
-    df = pd.DataFrame(st.session_state.devices)
+    if st.session_state.devices:
+        st.subheader("Device List")
+        
+        df = pd.DataFrame(st.session_state.devices)
+        if "Include" not in df.columns:
+            df["Include"] = True
     
     edited_df = st.data_editor(
         df,
@@ -233,7 +237,9 @@ if st.session_state.devices:
             "Alloc Heavy": st.column_config.NumberColumn("Heavy Load %", min_value=0.0, max_value=100.0, format="%.2f"),
             "Alloc Light": st.column_config.NumberColumn("Regular Load %", min_value=0.0, max_value=100.0, format="%.2f"),
             "Hours Peak": st.column_config.NumberColumn("Peak Hours", min_value=0.0, max_value=24.0, step=0.01, format="%.2f"),
+            "Hours Peak": st.column_config.NumberColumn("Peak Hours", min_value=0.0, max_value=24.0, step=0.01, format="%.2f"),
             "Hours Low": st.column_config.NumberColumn("Off-Peak Hours", min_value=0.0, max_value=24.0, step=0.01, format="%.2f"),
+            "Include": st.column_config.CheckboxColumn("Include", default=True),
         },
         key="device_editor"
     )
@@ -346,12 +352,16 @@ if st.session_state.devices:
             use_container_width=True
         )
 
-        # Total Metrics
-        total_daily = cost_df["Daily Cost"].sum()
-        total_monthly = cost_df["Monthly Cost"].sum()
-        total_annual = cost_df["Annual Cost"].sum()
+        # Total Metrics - Filter by Include
+        # Align indices just in case, though they should match
+        active_mask = edited_df["Include"].fillna(True).astype(bool)
+        active_cost_df = cost_df[active_mask]
         
-        total_daily_kwh = cost_df["Daily kWh"].sum()
+        total_daily = active_cost_df["Daily Cost"].sum()
+        total_monthly = active_cost_df["Monthly Cost"].sum()
+        total_annual = active_cost_df["Annual Cost"].sum()
+        
+        total_daily_kwh = active_cost_df["Daily kWh"].sum()
         total_monthly_kwh = total_daily_kwh * Decimal("30.4167")
         total_annual_kwh = total_daily_kwh * Decimal("365")
         
@@ -400,7 +410,9 @@ if st.session_state.devices:
         
         # Prepare data for Pie Chart
         # Use display_df which contains all the correct aligned data
-        chart_df = display_df[["Name", "Annual Cost"]].copy()
+        # Filter for included devices
+        chart_df = display_df[display_df["Include"].fillna(True).astype(bool)].copy()
+        chart_df = chart_df[["Name", "Annual Cost"]]
         chart_df["Annual Cost"] = chart_df["Annual Cost"].astype(float)
         
         if not chart_df.empty:
