@@ -195,6 +195,11 @@ with st.form("new_device"):
     # Total hours can be up to 24.
     hours_peak = t1.number_input("Peak", min_value=0.0, max_value=24.0, value=0.0, step=0.01, format="%.2f")
     hours_low = t2.number_input("Off-Peak", min_value=0.0, max_value=24.0, value=0.0, step=0.01, format="%.2f")
+    
+    st.subheader("Frequency")
+    f1, f2 = st.columns(2)
+    days_per_week = f1.number_input("Days per Week", min_value=0.0, max_value=7.0, value=7.0, step=1.0, format="%.1f")
+    weeks_per_year = f2.number_input("Weeks per Year", min_value=0.0, max_value=52.0, value=52.0, step=1.0, format="%.1f")
 
     submitted = st.form_submit_button("Add Device")
     if submitted:
@@ -205,14 +210,16 @@ with st.form("new_device"):
         elif (hours_peak + hours_low) > 24.0:
              st.error(f"Total hours cannot exceed 24. Current total: {hours_peak + hours_low}")
         else:
+            # Apply scaling for days per week and weeks per year
+            scaling_factor = (days_per_week / 7.0) * (weeks_per_year / 52.0)
             st.session_state.devices.append({
                 "Name": name,
                 "Power Heavy": power_heavy,
                 "Power Light": power_light,
                 "Alloc Heavy": alloc_heavy,
                 "Alloc Light": alloc_light,
-                "Hours Peak": hours_peak,
-                "Hours Low": hours_low,
+                "Hours Peak": hours_peak * scaling_factor,
+                "Hours Low": hours_low * scaling_factor,
                 "Include": True
             })
             st.success(f"Added {name}")
@@ -343,7 +350,8 @@ if st.session_state.devices:
 
             "Off-Peak Hours": "{:.2f}",
             "Heavy %": "{:.2f}",
-            "Regular %": "{:.2f}"
+            "Regular %": "{:.2f}",
+            "Daily kWh": "{:.3f}"
         }
         
         st.subheader("Cost Breakdown")
