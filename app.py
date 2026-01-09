@@ -426,6 +426,7 @@ if st.session_state.devices:
         if not chart_df.empty:
             fig = px.pie(chart_df, values="Annual Cost", names="Name", 
                          title="Share of Total Annual Cost")
+            fig.update_layout(height=900)
             st.plotly_chart(fig, use_container_width=True)
 
 
