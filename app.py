@@ -162,6 +162,30 @@ DEVICE_DEFAULTS = {
         "Hours Peak": 4.0, "Hours Low": 0.0,
         "Days": 7.0, "Weeks": 12.0
     },
+    "Air Source Heat Pump (Low Annual)": {
+        "Power Heavy": 460.0, "Power Light": 10.0,
+        "Alloc Heavy": 100.0, "Alloc Light": 0.0,
+        "Hours Peak": 11.0, "Hours Low": 1.0,
+        "Days": 7.0, "Weeks": 52.0
+    },
+    "Air Source Heat Pump (High Annual)": {
+        "Power Heavy": 910.0, "Power Light": 10.0,
+        "Alloc Heavy": 100.0, "Alloc Light": 0.0,
+        "Hours Peak": 11.0, "Hours Low": 1.0,
+        "Days": 7.0, "Weeks": 52.0
+    },
+    "Air Source Heat Pump (Winter -3 to 0 C)": {
+        "Power Heavy": 2500.0, "Power Light": 10.0,
+        "Alloc Heavy": 100.0, "Alloc Light": 0.0,
+        "Hours Peak": 11.0, "Hours Low": 1.0,
+        "Days": 7.0, "Weeks": 4.0
+    },
+    "Air Source Heat Pump (Winter 0 to 7 C)": {
+        "Power Heavy": 1500.0, "Power Light": 10.0,
+        "Alloc Heavy": 100.0, "Alloc Light": 0.0,
+        "Hours Peak": 11.0, "Hours Low": 1.0,
+        "Days": 7.0, "Weeks": 8.0
+    },
     "Sky Q box": {
         "Power Heavy": 21.0, "Power Light": 17.0,
         "Alloc Heavy": 40.0, "Alloc Light": 60.0,
